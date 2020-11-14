@@ -1,11 +1,14 @@
 package content;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
+
 
 public class guiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
@@ -19,6 +22,7 @@ public class guiHandler extends MouseAdapter{
 	    private final JPanel pEast;
 	    private final Set<ColorButton> bColors;
 	    private final JButton bDelete;
+	    private final JButton copyAndPaste;
 	    private Color currentColor = Color.BLACK;
 	    private final MyMouseListener myListener;
 	    
@@ -37,6 +41,17 @@ public class guiHandler extends MouseAdapter{
 					guiHandler.this.getpCenterPanel().repaint();
 				}
 			});
+	    	
+	    	
+	    	this.copyAndPaste = new JButton("CopyAndPaste");
+	    	this.copyAndPaste.addActionListener(new ActionListener() {		
+				public void actionPerformed(ActionEvent arg0) {
+				guiHandler.this.getpCenterPanel().setCopyAndPasteMode(true);
+
+				}
+			});
+	    	
+	    	
 	    	
 	    	this.selectColorText = new JLabel("Select color");	
 	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS) );
@@ -66,6 +81,7 @@ public class guiHandler extends MouseAdapter{
 			
 			this.addVerticalSpacing(this.pEast, 10);
 			this.pEast.add(this.bDelete);
+			this.pEast.add(this.copyAndPaste);
 	    }
 	    
 	    private void addColorButtons() {
@@ -75,6 +91,8 @@ public class guiHandler extends MouseAdapter{
 	    	this.bColors.add(new ColorButton("YELLOW", Color.YELLOW, this));
 	    	this.bColors.add(new ColorButton("BLACK", Color.BLACK, this));
 	    }
+	    
+
 	    
 	    private void addVerticalSpacing(JPanel target, int Yspacing) {
 	    	target.add(Box.createVerticalStrut(Yspacing));
@@ -89,6 +107,7 @@ public class guiHandler extends MouseAdapter{
 		private void setCenterPanelListeners() { 	
 	    	this.getpCenterPanel().addMouseListener(this.myListener);
 	    	this.getpCenterPanel().addMouseMotionListener(this.myListener);
+	    
 	    }
 	    
 	    private void setPenSizeJSlider() {
@@ -96,6 +115,8 @@ public class guiHandler extends MouseAdapter{
 	    	this.penSizeText = new JLabel("Select pen size");
 	    	this.penSize.setMajorTickSpacing(2);
 	    }
+	       
+
 	    
 	    public DrawPanel getpCenterPanel() {
 	    	return this.pcenterPanel;
